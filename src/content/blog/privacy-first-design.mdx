@@ -1,0 +1,60 @@
+---
+title: "Privacy-First Design: Zero Data Leaves Your Device"
+date: "2026-03-10"
+category: "Privacy"
+excerpt: "How we architected Backgrone so that collecting user data is not just a policy choice — it's a technical impossibility."
+thumbnail: "/blog/privacy-first-design.jpg"
+---
+
+Most privacy promises are policy decisions. A company writes a privacy policy, trains its employees, implements access controls, and hopes nothing goes wrong. Backgrone takes a fundamentally different approach: we designed the architecture so that collecting your data is technically impossible. There is no server to receive your images, no database to store them, no API endpoint to intercept them. Privacy isn't our policy — it's our physics.
+
+## The Architecture of Impossibility
+
+When you visit Backgrone, your browser downloads a set of static files: HTML, CSS, JavaScript, and AI model weights. From that point forward, everything happens locally. The architecture has no moving parts on the server side — no application server, no database, no message queue, no object storage.
+
+This isn't a cost-saving measure or a simplification. It's a deliberate design choice that eliminates entire categories of privacy risk:
+
+**No backend servers** — We serve static files through a CDN. There is no application server that could receive, process, or log your images. The server's job is done the moment your browser finishes downloading the page assets.
+
+**No API endpoints** — There is literally no URL you could POST an image to. If you opened the browser's network inspector and tried to find a data upload endpoint, you'd find nothing — because nothing exists.
+
+**No analytics tracking** — We don't use Google Analytics, Mixpanel, Hotjar, or any other tracking service. We don't know how many images you process, what they contain, how long you spend on the site, or whether you come back tomorrow.
+
+**No cookies** — No tracking cookies, no session cookies, no consent banners. Your browser's cookie jar stays empty after visiting Backgrone.
+
+**No accounts** — There's nothing to sign up for, no email to provide, no profile to create. You visit the page and start removing backgrounds. That's the entire user journey.
+
+## Verify It Yourself
+
+Privacy claims are easy to make and hard to verify. We encourage you to verify ours:
+
+**Network inspection** — Open your browser's Developer Tools (press F12), navigate to the Network tab, and clear the log. Now upload an image and process it. Watch the network requests. You'll see zero outgoing requests containing image data. The only requests are for static assets — and after the model is cached, you won't see any requests at all.
+
+**Offline test** — The most convincing demonstration: visit Backgrone once to cache the model, then disconnect from the internet entirely. Enable airplane mode, unplug your ethernet cable, turn off your Wi-Fi. Now open Backgrone and process an image. It works perfectly. If your images were being uploaded anywhere, this would fail.
+
+**Source code review** — Backgrone is open source. Every line of code is available for inspection. Security researchers, privacy advocates, and curious developers are all welcome to audit the codebase and confirm that no data exfiltration exists.
+
+## COOP/COEP: Security Headers That Enable Performance
+
+You might notice that Backgrone sets two unusual HTTP headers:
+
+- `Cross-Origin-Opener-Policy: same-origin`
+- `Cross-Origin-Embedder-Policy: credentialless`
+
+These headers enable `SharedArrayBuffer`, a JavaScript feature required for high-performance WebAssembly execution with threading support. They also provide a security benefit: they isolate your browsing context from other origins, preventing certain classes of side-channel attacks like Spectre.
+
+In other words, the same headers that make Backgrone fast also make it more secure.
+
+## Why This Matters Beyond Backgrone
+
+The web is built on a surveillance economy. Most free tools monetize your attention, your data, or both. Every image you upload to a cloud service becomes part of someone's dataset, someone's training pipeline, someone's business model.
+
+We believe there's a better way. Modern browsers are powerful enough to run sophisticated AI models locally. WebAssembly provides near-native performance. IndexedDB provides persistent local storage. Web Workers provide multi-threaded execution. The technical barriers that once justified cloud processing have largely disappeared.
+
+Backgrone is proof that privacy-respecting, fully local AI tools are not just possible — they're practical, performant, and ready for daily use.
+
+## The Bottom Line
+
+When a company says "we don't sell your data," that's a policy. When a company says "we can't access your data because the architecture makes it impossible," that's engineering. Backgrone is the latter.
+
+Your images are yours. They stay on your device, processed by your hardware, stored nowhere else. Not because we promise — because we can't.
