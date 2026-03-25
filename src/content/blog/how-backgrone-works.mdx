@@ -1,0 +1,59 @@
+---
+title: "How Backgrone Works: AI Background Removal in Your Browser"
+date: "2026-03-20"
+category: "Technology"
+excerpt: "A deep dive into how we process images 100% locally using WebAssembly and AI models — no servers, no uploads, no compromises."
+thumbnail: "/blog/how-backgrone-works.jpg"
+---
+
+Most background removal tools require you to upload your photo to a distant server, wait for processing, and hope your data isn't being stored or misused. Backgrone takes a radically different approach: the entire AI pipeline runs inside your browser tab. Your images never leave your device — not even for a millisecond.
+
+Here's exactly how that works under the hood.
+
+## The Core Idea: Bring the Model to the Data
+
+Traditional cloud-based tools follow a "data-to-model" pattern — your image travels to wherever the neural network lives. Backgrone flips this: we ship the neural network directly to your browser using WebAssembly (WASM), a binary instruction format that lets compiled code run at near-native speed in any modern browser.
+
+Think of it like the difference between mailing your film to a photo lab versus having a darkroom in your basement. The result is the same; the privacy implications are entirely different.
+
+## Three Engines, One Goal
+
+We offer three AI engines, each optimized for different scenarios:
+
+**Precision (ISNet fp16)** — Our highest-fidelity engine weighing in at approximately 84 MB. It uses the ISNet architecture with 16-bit floating-point precision, producing the most accurate edge detection available in a browser. If you're removing backgrounds from product photos or portraits with flyaway hair, this is the engine to choose.
+
+**Lightweight (ISNet uint8)** — The same ISNet architecture, quantized down to 8-bit integers at roughly 42 MB. The quality difference is subtle — often imperceptible — but the smaller footprint means faster downloads and lower memory usage, making it ideal for older devices or slower connections.
+
+**Balanced (RMBG-1.4)** — BRIA AI's RMBG-1.4 model at approximately 44 MB, powered by Transformers.js. Trained on over 12,000 manually labeled images spanning diverse categories, it delivers reliably good results across a wide range of subjects without requiring the largest download.
+
+## The Processing Pipeline
+
+Every image you drop into Backgrone passes through a five-stage pipeline, all executed locally:
+
+1. **Upload** — The browser's File API reads your image into memory. No network request is made. The file bytes stay entirely within your tab's JavaScript context.
+
+2. **Preprocess** — The image is resized to the model's expected input dimensions (typically 1024x1024 for ISNet) and normalized. Pixel values are converted from 0-255 integers to floating-point tensors the neural network can consume.
+
+3. **Inference** — This is where the magic happens. The neural network processes the tensor through dozens of convolutional layers, generating an alpha mask — a grayscale image where white pixels represent the foreground subject and black pixels represent the background.
+
+4. **Postprocess** — The alpha mask is upscaled back to your image's original resolution using bilinear interpolation, then applied as a transparency channel. Edge refinement algorithms smooth any jagged boundaries.
+
+5. **Download** — You receive a lossless PNG with a fully transparent background, ready for use in presentations, e-commerce listings, design mockups, or anywhere else you need a clean cutout.
+
+## Web Workers: Keeping the UI Smooth
+
+Neural network inference is computationally expensive — it involves millions of matrix multiplications. Running that on the main thread would freeze your browser tab entirely.
+
+Backgrone offloads all heavy computation to a Web Worker, a separate execution thread that operates independently of the UI. While the AI crunches through your image, you can still scroll the page, adjust settings, or queue up additional images. A progress indicator keeps you informed without blocking interaction.
+
+## Offline Capable
+
+After the initial model download, Backgrone caches the model weights in IndexedDB — your browser's built-in persistent storage. Subsequent visits skip the download entirely, loading the cached model in under 200 milliseconds.
+
+This means Backgrone works completely offline. Try it yourself: visit the site once to cache the model, then enable airplane mode and process an image. It works exactly the same. No internet required, no exceptions.
+
+## Why This Matters
+
+By running everything locally, Backgrone eliminates an entire category of risk. There's no server that could be breached, no upload that could be intercepted, no cloud storage that could leak. Your images are yours — processed on your hardware, stored nowhere else.
+
+That's not just a feature. That's the architecture.

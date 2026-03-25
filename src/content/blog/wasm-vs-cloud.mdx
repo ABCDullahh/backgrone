@@ -1,0 +1,59 @@
+---
+title: "WASM vs Cloud: Why Local Processing Wins"
+date: "2026-03-18"
+category: "Privacy"
+excerpt: "Cloud-based background removal services upload your images to their servers. We explain why keeping everything local is faster, cheaper, and fundamentally safer."
+thumbnail: "/blog/wasm-vs-cloud.jpg"
+---
+
+Every time you drag a photo into a cloud-based background removal tool, you're making an implicit trust decision. You're trusting that company's servers, their employees, their security practices, and their data retention policies — all for a two-second image edit. Backgrone exists because we believe that trade-off is unnecessary.
+
+## The Cloud Model: Convenient but Compromised
+
+The standard approach to AI-powered image editing follows a well-worn path. You upload your image over HTTPS to a remote server. That server loads a GPU-accelerated model, processes your photo, and sends back the result. It works, and it's fast — but every step introduces risk.
+
+Your image traverses the public internet, passes through load balancers, sits in temporary storage, gets processed by code you can't inspect, and may be logged, cached, or retained for "service improvement." Even companies with good intentions may retain metadata, usage patterns, or anonymized versions of your data.
+
+For a casual vacation photo, maybe that's acceptable. For a confidential product prototype, a medical image, or a private family moment? The calculus changes entirely.
+
+## WebAssembly Changes the Equation
+
+WebAssembly (WASM) is a binary instruction format that runs in every major browser at near-native speed. Originally designed for gaming and computationally intensive web applications, it turns out to be perfect for running machine learning models client-side.
+
+Here's what WASM enables for Backgrone:
+
+- **Zero data transmission** — Your image never leaves your device. Not as a thumbnail, not as metadata, not even as a hash. The pixels stay in your browser's memory from upload to download.
+
+- **No server infrastructure** — We don't operate GPU clusters, manage autoscaling groups, or maintain API endpoints. Our hosting serves static files — HTML, CSS, JavaScript, and model weights. That's it.
+
+- **Offline operation** — After the initial model download (cached in IndexedDB), the entire application works without an internet connection. Try enabling airplane mode — Backgrone won't even notice.
+
+- **Deterministic results** — The same image processed with the same engine always produces identical output. No server-side variation, no A/B testing of model versions, no inconsistency between runs.
+
+## Performance: Closer Than You'd Think
+
+A common assumption is that cloud processing must be faster because servers have dedicated GPUs. In practice, the comparison is more nuanced.
+
+Cloud services typically complete processing in 2 to 5 seconds — but that includes network latency (uploading and downloading the image), queue wait times during peak load, and the actual inference. The raw GPU inference might take 200 milliseconds, but you rarely experience that in isolation.
+
+Backgrone running in a modern browser with WASM and SIMD (Single Instruction, Multiple Data) support processes a typical photograph in 1 to 3 seconds. With WebGPU acceleration — available in Chrome and Edge — inference drops below 500 milliseconds. And there's zero network overhead.
+
+For batch processing, the advantage compounds. Cloud services often throttle concurrent requests or charge per image. Backgrone processes images sequentially with no rate limits, no API keys, and no per-image cost.
+
+## The Cost Argument
+
+Running GPU servers is expensive. Cloud background removal services typically charge between $0.05 and $1.00 per image, or offer limited free tiers with aggressive upselling. Enterprise plans can run thousands of dollars per month.
+
+Backgrone costs nothing. The computational cost is borne by your own hardware — the CPU and GPU already sitting in your laptop or phone. The only infrastructure cost is serving static files, which modern CDNs handle for pennies.
+
+## The Trade-off: Initial Download
+
+The one genuine downside of local processing is the initial model download. Depending on which engine you choose, you'll download between 42 and 84 MB of model weights the first time you use Backgrone.
+
+But this is a one-time cost. The model is cached in IndexedDB and persists across browser sessions. Subsequent visits load the cached model in under 200 milliseconds — faster than most cloud APIs can even establish a TLS handshake.
+
+For privacy-conscious users, bandwidth-constrained environments, or anyone who values data sovereignty, that initial download is a small price to pay for permanent, unlimited, offline-capable background removal.
+
+## The Verdict
+
+Cloud processing made sense when browsers couldn't run neural networks. That era is over. WebAssembly, Web Workers, and WebGPU have made the browser a legitimate ML inference platform — and for privacy-sensitive tasks like image editing, it's the only platform that truly respects your data.
