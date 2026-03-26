@@ -9,8 +9,8 @@ import {
 import { ANIM, staggerContainer, fadeInUp } from "@/lib/animations";
 
 const headlineWords = [
-  { text: "REMOVE", indent: false },
-  { text: "BACKGROUND", indent: true },
+  { text: "THE ART", indent: false },
+  { text: "OF REMOVAL", indent: true },
 ];
 
 export function Hero() {
