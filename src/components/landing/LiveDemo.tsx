@@ -62,7 +62,7 @@ export function LiveDemo() {
       e.preventDefault();
       setIsDragging(false);
       const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith("image/")) {
+      if (file && ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"].includes(file.type)) {
         storeFileAndNavigate(file);
       }
     },
@@ -72,7 +72,7 @@ export function LiveDemo() {
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (file && file.type.startsWith("image/")) {
+      if (file && ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"].includes(file.type)) {
         storeFileAndNavigate(file);
       }
     },
