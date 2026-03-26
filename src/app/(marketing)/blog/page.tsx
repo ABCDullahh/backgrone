@@ -4,9 +4,12 @@ import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Journal — Backgrone",
+  title: "Blog \u2014 AI Background Removal Tips & Guides",
   description:
-    "Articles on AI background removal, WebAssembly, privacy-first design, and more.",
+    "Articles on AI background removal, WebAssembly-powered image processing, privacy-first design, and tips for removing backgrounds from images. Backgrone journal.",
+  alternates: {
+    canonical: "https://backgrone.app/blog",
+  },
 };
 
 export default function BlogPage() {

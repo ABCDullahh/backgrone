@@ -15,37 +15,37 @@ const USE_CASES = [
   {
     icon: Camera,
     title: "Photographers",
-    description: "Clean backdrops for portraits and product shots.",
+    description: "Remove backgrounds from portraits and product shots instantly. Get transparent PNGs with clean edges.",
     span: "md:col-span-2",
   },
   {
     icon: ShoppingBag,
     title: "eCommerce",
-    description: "White-background product images in seconds.",
+    description: "Create white-background product images in seconds. Batch remove backgrounds for your entire catalog.",
     span: "md:col-span-1",
   },
   {
     icon: Megaphone,
     title: "Marketers",
-    description: "Create ad creatives without a design team.",
+    description: "Remove image backgrounds for ad creatives and social media. No design team needed.",
     span: "md:col-span-1",
   },
   {
     icon: Code,
     title: "Developers",
-    description: "Open-source, self-hostable, no vendor lock-in.",
+    description: "Open-source background removal tool. Self-hostable, client-side processing, no vendor lock-in.",
     span: "md:col-span-2",
   },
   {
     icon: Building2,
     title: "Enterprise",
-    description: "Scale without limits, zero data leaves your network.",
+    description: "Private AI background removal at scale. Zero data leaves your network, no cloud dependency.",
     span: "md:col-span-1",
   },
   {
     icon: User,
     title: "Individuals",
-    description: "Perfect profile pictures and social media posts.",
+    description: "Remove backgrounds from profile pictures and social media posts for free. No signup required.",
     span: "md:col-span-2",
   },
 ] as const;
@@ -64,9 +64,9 @@ export function UseCases() {
             SECTION // 04
           </p>
           <h2 className="mt-4 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
-            BUILT FOR
+            BACKGROUND REMOVAL
             <br />
-            EVERYONE.
+            FOR EVERYONE.
           </h2>
         </motion.div>
 

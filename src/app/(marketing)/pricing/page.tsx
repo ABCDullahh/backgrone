@@ -3,8 +3,12 @@ import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Pricing — Backgrone",
-  description: "Free forever. No signup, no watermarks.",
+  title: "Free Background Remover \u2014 No Signup, No Watermark",
+  description:
+    "Backgrone is a 100% free AI background remover. No signup, no watermarks, no usage limits. Remove backgrounds from images online with unlimited processing. Free forever.",
+  alternates: {
+    canonical: "https://backgrone.app/pricing",
+  },
 };
 
 const FREE_FEATURES = [
@@ -112,7 +116,7 @@ export default function PricingPage() {
                 href="/editor"
                 className="mt-10 block bg-secondary-container py-4 text-center font-label text-xs font-bold uppercase tracking-widest text-on-secondary-container"
               >
-                START REMOVING
+                REMOVE BACKGROUND FREE
               </Link>
             </div>
           </div>
@@ -161,7 +165,7 @@ export default function PricingPage() {
           <div className="relative aspect-[4/3] w-full overflow-hidden bg-surface-container">
             <img
               src="/samples/pricing-hero.jpg"
-              alt="Backgrone creator"
+              alt="Backgrone free background remover creator"
               className="h-full w-full object-cover grayscale"
             />
           </div>

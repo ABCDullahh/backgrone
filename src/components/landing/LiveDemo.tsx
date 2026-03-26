@@ -95,7 +95,9 @@ export function LiveDemo() {
             SECTION // 02
           </p>
           <h2 className="mt-4 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
-            TRY IT NOW.
+            REMOVE BACKGROUND
+            <br />
+            RIGHT NOW.
           </h2>
         </motion.div>
 
@@ -116,7 +118,7 @@ export function LiveDemo() {
               itemOne={
                 <ReactCompareSliderImage
                   src={activeSample.original}
-                  alt={`${activeSample.label} - Original`}
+                  alt={`${activeSample.label} original image before background removal`}
                   style={{
                     objectFit: "contain",
                     width: "100%",
@@ -132,7 +134,7 @@ export function LiveDemo() {
                 >
                   <img
                     src={activeSample.result}
-                    alt={`${activeSample.label} - Background Removed`}
+                    alt={`${activeSample.label} with background removed using AI background remover`}
                     style={{
                       objectFit: "contain",
                       width: "100%",

@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "How it Works — Backgrone",
+  title: "How AI Background Removal Works in Your Browser",
   description:
-    "Upload an image, AI processes locally in your browser, download the result. No cloud, no signup.",
+    "Learn how Backgrone removes backgrounds from images using AI locally in your browser. WebAssembly-powered, no upload to servers, 3 AI engines, instant transparent PNG output.",
+  alternates: {
+    canonical: "https://backgrone.app/how-it-works",
+  },
 };
 
 const STEPS = [
@@ -16,7 +19,7 @@ const STEPS = [
     layout: "left" as const,
     imageSrc:
       "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "Person using a laptop computer to select and upload an image",
+    imageAlt: "Upload image to free AI background remover tool in browser",
   },
   {
     num: "02",
@@ -26,7 +29,7 @@ const STEPS = [
     layout: "right" as const,
     imageSrc:
       "https://images.pexels.com/photos/17483869/pexels-photo-17483869.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "AI neural network illustration representing machine learning",
+    imageAlt: "AI background removal processing locally in browser via WebAssembly",
   },
   {
     num: "03",
@@ -36,7 +39,7 @@ const STEPS = [
     layout: "left" as const,
     imageSrc:
       "https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "Person reviewing a finished photo on screen ready for download",
+    imageAlt: "Download transparent PNG after removing background from image for free",
   },
 ] as const;
 
@@ -206,14 +209,14 @@ export default function HowItWorksPage() {
       <section className="px-6 py-24 md:px-12 md:py-32 lg:px-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
-            SEE FOR YOURSELF.
+            TRY IT YOURSELF.
           </h2>
           <div className="mt-10">
             <Link
               href="/editor"
               className="inline-block bg-secondary-container px-10 py-5 font-label text-xs font-bold uppercase tracking-widest text-on-secondary-container"
             >
-              TRY IT NOW
+              REMOVE BACKGROUND FREE
             </Link>
           </div>
         </div>

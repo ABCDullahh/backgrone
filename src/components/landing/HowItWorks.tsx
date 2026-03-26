@@ -6,21 +6,21 @@ import { ANIM } from "@/lib/animations";
 const STEPS = [
   {
     num: "01",
-    title: "Upload",
+    title: "Upload Your Image",
     description:
-      "Drag and drop your image or click to browse. Supports JPEG, PNG, WebP, and HEIC.",
+      "Drag and drop your image or click to browse. Our free background remover supports JPEG, PNG, WebP, and HEIC formats.",
   },
   {
     num: "02",
-    title: "Process",
+    title: "AI Removes Background",
     description:
-      "Our AI analyzes and removes the background in under 2 seconds, entirely in your browser.",
+      "Our AI background removal engine processes your image locally in your browser in under 2 seconds. No upload to any server.",
   },
   {
     num: "03",
-    title: "Download",
+    title: "Download Transparent PNG",
     description:
-      "Get your transparent PNG instantly. No watermarks, no signup, no limits.",
+      "Get your image with transparent background instantly. Lossless quality, no watermarks, no signup. Free background removal forever.",
   },
 ] as const;
 
@@ -38,7 +38,9 @@ export function HowItWorks() {
             SECTION // 05
           </p>
           <h2 className="mt-4 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
-            HOW IT WORKS.
+            HOW TO REMOVE
+            <br />
+            BACKGROUND.
           </h2>
         </motion.div>
 

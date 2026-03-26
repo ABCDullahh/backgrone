@@ -9,8 +9,8 @@ import {
 import { ANIM, staggerContainer, fadeInUp } from "@/lib/animations";
 
 const headlineWords = [
-  { text: "THE ART", indent: false },
-  { text: "OF REMOVAL", indent: true },
+  { text: "REMOVE", indent: false },
+  { text: "BACKGROUND", indent: true },
 ];
 
 export function Hero() {
@@ -24,10 +24,14 @@ export function Hero() {
             initial="initial"
             animate="animate"
           >
+            <h1 className="sr-only">
+              Remove Background from Image — Free AI Background Remover Online
+            </h1>
             {headlineWords.map((word, i) => (
               <motion.span
                 key={i}
                 variants={fadeInUp}
+                aria-hidden="true"
                 className={`text-huge block font-headline font-black tracking-[-0.04em] ${
                   word.indent ? "ml-24 md:ml-48" : ""
                 }`}
@@ -47,7 +51,7 @@ export function Hero() {
             }}
             className="mt-12 font-label text-sm uppercase tracking-widest text-on-surface-variant"
           >
-            01 // PIXEL-PERFECT AI-POWERED BACKGROUND REMOVAL
+            FREE AI BACKGROUND REMOVER — 100% PRIVATE, NO UPLOAD, RUNS LOCALLY IN YOUR BROWSER
           </motion.p>
 
           <motion.div
@@ -64,7 +68,7 @@ export function Hero() {
               href="/editor"
               className="inline-block bg-secondary px-8 py-4 font-label text-xs font-bold uppercase tracking-widest text-white"
             >
-              REMOVE BACKGROUND
+              REMOVE BACKGROUND FREE
             </Link>
           </motion.div>
         </div>
@@ -85,7 +89,7 @@ export function Hero() {
               itemOne={
                 <ReactCompareSliderImage
                   src="/samples/hero-before.jpg"
-                  alt="Original photo with background"
+                  alt="Original photo before background removal with Backgrone AI"
                   style={{
                     objectFit: "contain",
                     width: "100%",
@@ -100,7 +104,7 @@ export function Hero() {
                 >
                   <img
                     src="/samples/hero-after.png"
-                    alt="Background removed"
+                    alt="Image with background removed using free AI background remover Backgrone"
                     style={{
                       objectFit: "contain",
                       width: "100%",

@@ -11,37 +11,49 @@ const FEATURES: ReadonlyArray<{
   imageAlt: string;
 }> = [
   {
-    title: "Edge Precision",
+    title: "AI Edge Precision",
     description:
-      "Less blurry edges, fewer artifacts. Our AI preserves fine details with precision.",
+      "Remove backgrounds with pixel-perfect accuracy. Our AI background remover preserves fine details like hair, fur, and transparent objects with fewer artifacts than cloud-based tools.",
     layout: "image-left",
     imageSrc:
       "https://images.pexels.com/photos/1081685/pexels-photo-1081685.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "Close-up of woman with hair blowing in studio light showing fine detail",
+    imageAlt: "AI background removal with precise edge detection on fine hair details",
   },
   {
-    title: "Multi-Engine Power",
+    title: "3 AI Engines",
     description:
-      "Choose from 3 AI engines optimized for different needs.",
+      "Choose from 3 AI background removal engines: ISNet Precision for best quality, ISNet Lightweight for speed, or RMBG-1.4 for balanced results. All run locally via WebAssembly.",
     layout: "image-right",
     imageSrc:
       "https://images.pexels.com/photos/1476321/pexels-photo-1476321.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "Dashboard with multiple gauges and dials representing engine options",
+    imageAlt: "Multiple AI engines for background removal showing different processing options",
   },
   {
-    title: "Batch Processing",
+    title: "Batch Background Removal",
     description:
-      "Process up to 20 images at once. Download as ZIP.",
+      "Remove backgrounds from up to 20 images at once. Process multiple photos in batch and download all transparent PNGs as a single ZIP file. No upload, no limits.",
     layout: "image-left",
     imageSrc:
       "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1920",
-    imageAlt: "Multiple screens showing various images for batch processing",
+    imageAlt: "Batch background removal processing multiple images simultaneously",
   },
 ];
 
 export function Features() {
   return (
     <section className="px-6 py-24 md:px-12 md:py-32 lg:px-20">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-16">
+          <p className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">
+            SECTION // 03
+          </p>
+          <h2 className="mt-4 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
+            POWERFUL
+            <br />
+            FEATURES.
+          </h2>
+        </div>
+      </div>
       <div className="mx-auto max-w-6xl space-y-32">
         {FEATURES.map((feature, i) => {
           const isImageLeft = feature.layout === "image-left";

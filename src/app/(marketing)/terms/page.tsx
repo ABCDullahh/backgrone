@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Backgrone",
+  title: "Terms of Service",
   description:
-    "Terms of service for Backgrone, the privacy-first AI background removal tool.",
+    "Terms of service for Backgrone, the free AI background remover. Client-side image processing, no data collection, open-source background removal tool.",
+  alternates: {
+    canonical: "https://backgrone.app/terms",
+  },
 };
 
 export default function TermsPage() {
