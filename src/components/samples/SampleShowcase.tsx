@@ -48,9 +48,9 @@ export function SampleShowcase() {
           SECTION // 01
         </span>
         <h2 className="mt-2 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
-          PROOF OF
+          BACKGROUND REMOVAL
           <br />
-          PRECISION.
+          EXAMPLES.
         </h2>
       </motion.div>
 

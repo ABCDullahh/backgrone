@@ -17,10 +17,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPostBySlug(slug);
-  if (!post) return { title: "Post Not Found — Backgrone" };
+  if (!post) return { title: "Post Not Found" };
   return {
-    title: `${post.title} — Backgrone`,
+    title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: `https://backgrone.app/blog/${slug}`,
+    },
   };
 }
 

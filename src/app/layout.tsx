@@ -22,9 +22,56 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Backgrone — Background Gone",
+  metadataBase: new URL("https://backgrone.app"),
+  title: {
+    default:
+      "Backgrone \u2014 Free AI Background Remover | Remove Background Instantly",
+    template: "%s | Backgrone",
+  },
   description:
-    "AI background removal, 100% local in your browser. No uploads, no cloud, no signup.",
+    "Remove background from images for free with AI \u2014 100% private, no upload, no signup. Runs locally in your browser via WebAssembly. Try the best free background remover online.",
+  keywords: [
+    "remove background",
+    "background remover",
+    "remove background from image",
+    "background removal tool",
+    "free background remover",
+    "remove background online free",
+    "local background removal",
+    "private background remover",
+    "ai background remover",
+    "remove background no upload",
+    "client-side background removal",
+    "remove bg",
+    "transparent background maker",
+    "background eraser",
+    "remove image background free",
+    "remove background without uploading",
+    "private ai background removal browser",
+    "offline background remover",
+    "remove background locally in browser",
+    "wasm background removal",
+  ],
+  openGraph: {
+    title:
+      "Backgrone \u2014 Free AI Background Remover | Remove Background Instantly",
+    description:
+      "Remove background from images for free with AI. 100% private, no upload, runs locally in your browser. The best free background remover online.",
+    type: "website",
+    siteName: "Backgrone",
+    locale: "en_US",
+    url: "https://backgrone.app",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Backgrone \u2014 Free AI Background Remover | Remove Background Instantly",
+    description:
+      "Remove background from images for free with AI. 100% private, no upload, runs locally in your browser.",
+  },
+  alternates: {
+    canonical: "https://backgrone.app",
+  },
 };
 
 export default function RootLayout({
@@ -45,17 +92,55 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              name: "Backgrone",
-              description:
-                "Remove image backgrounds instantly, 100% in your browser. No uploads, no cloud, no signup.",
-              applicationCategory: "DesignApplication",
-              operatingSystem: "Web Browser",
-              offers: {
-                "@type": "Offer",
-                price: "0",
-                priceCurrency: "USD",
-              },
+              "@graph": [
+                {
+                  "@type": "SoftwareApplication",
+                  name: "Backgrone",
+                  alternateName: [
+                    "Backgrone Background Remover",
+                    "BG Remover",
+                  ],
+                  description:
+                    "Free AI background remover that runs 100% in your browser. Remove backgrounds from images instantly with no upload, no signup, and no watermarks. Powered by ISNet and RMBG AI models via WebAssembly.",
+                  url: "https://backgrone.app",
+                  applicationCategory: "DesignApplication",
+                  operatingSystem: "Web Browser",
+                  offers: {
+                    "@type": "Offer",
+                    price: "0",
+                    priceCurrency: "USD",
+                    availability: "https://schema.org/InStock",
+                  },
+                  featureList: [
+                    "Remove background from images",
+                    "100% local processing - no upload",
+                    "3 AI engines to choose from",
+                    "Batch processing up to 20 images",
+                    "Free forever - no signup required",
+                    "No watermarks",
+                    "Supports PNG, JPG, WebP, HEIC",
+                    "Works offline after first load",
+                  ],
+                  screenshot:
+                    "https://backgrone.app/samples/hero-before.jpg",
+                  softwareVersion: "1.0.0",
+                  author: {
+                    "@type": "Person",
+                    name: "ABCDullahh",
+                  },
+                },
+                {
+                  "@type": "WebSite",
+                  name: "Backgrone",
+                  url: "https://backgrone.app",
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: "https://backgrone.app/editor",
+                    "query-input":
+                      "required name=search_term_string",
+                  },
+                },
+              ],
             }),
           }}
         />

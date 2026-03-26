@@ -4,9 +4,9 @@ import { motion } from "motion/react";
 import { ANIM, fadeInUpSlow } from "@/lib/animations";
 
 const PILLARS = [
-  { num: "01", title: "100% Local" },
-  { num: "02", title: "Zero Upload" },
-  { num: "03", title: "Lossless Output" },
+  { num: "01", title: "100% Local Processing", description: "Remove backgrounds entirely in your browser. No server, no cloud." },
+  { num: "02", title: "Zero Upload Required", description: "Your images never leave your device. Private background removal by design." },
+  { num: "03", title: "Lossless PNG Output", description: "Get transparent backgrounds at full resolution with no watermarks." },
 ] as const;
 
 export function Manifesto() {
@@ -27,9 +27,9 @@ export function Manifesto() {
         >
           &ldquo;Privacy is not a feature,
           <br />
-          it&rsquo;s a right. Your images never
+          it&rsquo;s a right. Remove backgrounds
           <br />
-          leave your device.&rdquo;
+          without uploading your images.&rdquo;
         </motion.blockquote>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:mt-24 md:grid-cols-3">
@@ -49,8 +49,11 @@ export function Manifesto() {
               <span className="font-label text-[10px] uppercase tracking-widest text-surface-variant/60">
                 {pillar.num}.
               </span>
-              <p className="mt-2 font-headline text-xl font-bold">
+              <h3 className="mt-2 font-headline text-xl font-bold">
                 {pillar.title}
+              </h3>
+              <p className="mt-1 font-body text-sm text-surface-variant/80">
+                {pillar.description}
               </p>
             </motion.div>
           ))}

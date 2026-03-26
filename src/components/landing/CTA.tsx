@@ -20,9 +20,9 @@ export function CTA() {
           viewport={ANIM.viewport}
           className="font-headline text-6xl font-black tracking-[-0.04em] md:text-9xl"
         >
-          Background Gone.
+          Remove Background.
           <br />
-          In Seconds.
+          Free. Instant.
         </motion.h2>
 
         <motion.div
@@ -40,13 +40,13 @@ export function CTA() {
             href="/editor"
             className="bg-primary px-8 py-4 font-label text-xs font-bold uppercase tracking-widest text-on-primary"
           >
-            START REMOVING
+            REMOVE BACKGROUND NOW
           </Link>
           <Link
             href="/samples"
             className="border-2 border-primary px-8 py-4 font-label text-xs font-bold uppercase tracking-widest text-primary"
           >
-            VIEW GALLERY
+            VIEW REMOVAL EXAMPLES
           </Link>
         </motion.div>
       </div>

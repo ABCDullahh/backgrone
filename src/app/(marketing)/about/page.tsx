@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About — Backgrone",
+  title: "About Backgrone \u2014 Privacy-First Background Removal Tool",
   description:
-    "The philosophy of removal. Privacy-first, no-cloud AI background removal.",
+    "Learn about Backgrone, the free AI background remover that processes images 100% locally in your browser. No uploads, no cloud, no tracking. Private background removal by architecture.",
+  alternates: {
+    canonical: "https://backgrone.app/about",
+  },
 };
 
 const TECH_CREDITS = [

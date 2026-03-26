@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Backgrone",
+  title: "Privacy Policy",
   description:
-    "We process nothing. Your browser does everything. Read our privacy policy.",
+    "Backgrone privacy policy. Your images never leave your device. 100% local AI background removal with zero data collection, no tracking, no cloud processing.",
+  alternates: {
+    canonical: "https://backgrone.app/privacy",
+  },
 };
 
 export default function PrivacyPage() {

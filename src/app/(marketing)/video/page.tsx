@@ -3,9 +3,12 @@ import Link from "next/link";
 import { Play, Camera, Download } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Video BG Removal — Backgrone",
+  title: "Video Background Remover \u2014 Coming Soon",
   description:
-    "Video background removal is coming to Backgrone. Real-time preview, webcam support, MP4/WEBM export.",
+    "Video background removal is coming to Backgrone. Remove backgrounds from video in real-time, right in your browser. Webcam support, MP4/WEBM export, 100% local processing.",
+  alternates: {
+    canonical: "https://backgrone.app/video",
+  },
 };
 
 const PLANNED_FEATURES = [

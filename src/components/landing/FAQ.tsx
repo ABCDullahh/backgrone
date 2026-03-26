@@ -7,29 +7,34 @@ import { ANIM } from "@/lib/animations";
 
 const FAQ_ITEMS = [
   {
-    question: "Is my data really private?",
+    question: "Is background removal really free?",
     answer:
-      "Yes. Everything runs in your browser using WebAssembly and WebGPU. Your images are never uploaded to any server. There is no backend, no cloud processing, and no analytics on your content.",
+      "Yes. Backgrone is a completely free background remover with no signup, no watermarks, and no usage limits. All processing happens locally in your browser, so there are no server costs to pass on to you.",
   },
   {
-    question: "Is it really free?",
+    question: "Is my data private when I remove backgrounds?",
     answer:
-      "Yes. No signup, no watermarks, no usage limits. Backgrone is a free, open-source tool. The processing happens entirely on your device.",
+      "Yes. Backgrone runs 100% in your browser using WebAssembly and WebGPU. Your images are never uploaded to any server. There is no backend, no cloud processing, and no analytics on your content. Privacy is guaranteed by architecture, not by policy.",
   },
   {
-    question: "What formats are supported?",
+    question: "What image formats are supported for background removal?",
     answer:
-      "JPEG, PNG, WebP, and HEIC input formats are supported. Output is always a transparent PNG at the original resolution.",
+      "JPEG, PNG, WebP, and HEIC input formats are supported. Output is always a transparent PNG at the original resolution with no quality loss.",
   },
   {
-    question: "Can I process multiple images?",
+    question: "Can I remove backgrounds from multiple images at once?",
     answer:
-      "Yes. Batch up to 20 images at once. They are processed sequentially in your browser and you can download them all as a single ZIP file.",
+      "Yes. Batch process up to 20 images at once. They are processed sequentially in your browser and you can download all transparent PNGs as a single ZIP file.",
   },
   {
-    question: "Which AI engine should I use?",
+    question: "Which AI engine should I use for background removal?",
     answer:
-      "Start with Precision for best quality. Use Speed for faster results on simpler backgrounds. Use Quality for the best balance of speed and accuracy.",
+      "Backgrone offers 3 AI engines: Precision (ISNet fp16) for best quality, Lightweight (ISNet uint8) for fastest processing, and Balanced (RMBG-1.4) for optimal speed-quality balance. Start with Precision for the most accurate background removal results.",
+  },
+  {
+    question: "Does the background remover work offline?",
+    answer:
+      "Yes. After the AI models are downloaded on first use, Backgrone works completely offline. The models are cached in your browser via IndexedDB and load in under 200ms on subsequent visits.",
   },
 ] as const;
 
@@ -49,6 +54,8 @@ export function FAQ() {
             SECTION // 08
           </p>
           <h2 className="mt-4 font-headline text-5xl font-black tracking-[-0.04em] md:text-7xl">
+            BACKGROUND REMOVAL
+            <br />
             FAQ.
           </h2>
         </motion.div>
