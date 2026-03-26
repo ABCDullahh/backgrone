@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Serif, Inter, Space_Grotesk } from "next/font/google";
 import { NavBar } from "@/components/layout/NavBar";
+import { GlobalDropZone } from "@/components/layout/GlobalDropZone";
 import "./globals.css";
 
 const notoSerif = Noto_Serif({
@@ -72,6 +73,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://backgrone.app",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "64x64" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -86,6 +95,7 @@ export default function RootLayout({
     >
       <body className="antialiased">
         <NavBar />
+        <GlobalDropZone />
         {children}
         <script
           type="application/ld+json"
