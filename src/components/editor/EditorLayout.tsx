@@ -23,6 +23,7 @@ import {
 import type { GradientConfig } from "@/lib/utils/canvas-compositing";
 import { ACCEPTED_FORMATS } from "@/lib/ml/types";
 import { Upload } from "lucide-react";
+import { consumePendingFile } from "@/lib/pending-file";
 import { UploadZone } from "./UploadZone";
 import { ProcessingOverlay } from "./ProcessingOverlay";
 import { ResultView } from "./ResultView";
@@ -83,18 +84,19 @@ export function EditorLayout() {
     downloadAllAsZip,
   } = useBatchProcessing();
 
-  // Sync error from hook to editor state
+  // Sync error from hook to editor state — only when transitioning OUT of processing
   useEffect(() => {
-    if (error && !isProcessing) {
+    if (error && !isProcessing && editorState === "processing") {
       setEditorState("error");
     }
-  }, [error, isProcessing]);
+  }, [error, isProcessing, editorState]);
 
   const handleFileSelect = useCallback(
     async (file: File) => {
+      clearError();
+      setResult(null);
       setOriginalFile(file);
       setEditorState("processing");
-      clearError();
 
       const processingResult = await processImage(file);
       if (processingResult) {
@@ -106,8 +108,20 @@ export function EditorLayout() {
     [processImage, clearError]
   );
 
-  // Pick up file stored by landing page LiveDemo before navigation
+  // Pick up file stored by GlobalDropZone / LiveDemo before navigation
+  const handleFileSelectRef = useRef(handleFileSelect);
+  handleFileSelectRef.current = handleFileSelect;
+
   useEffect(() => {
+    // Check in-memory store first (from GlobalDropZone)
+    const pending = consumePendingFile();
+    if (pending) {
+      sampleLoadedRef.current = true;
+      handleFileSelectRef.current(pending);
+      return;
+    }
+
+    // Fallback: check sessionStorage (from LiveDemo)
     const pendingDataUrl = sessionStorage.getItem("backgrone-pending-file");
     const pendingName = sessionStorage.getItem("backgrone-pending-filename");
     const pendingType = sessionStorage.getItem("backgrone-pending-type");
@@ -117,7 +131,7 @@ export function EditorLayout() {
       sessionStorage.removeItem("backgrone-pending-filename");
       sessionStorage.removeItem("backgrone-pending-type");
 
-      sampleLoadedRef.current = true; // prevent sample from loading too
+      sampleLoadedRef.current = true;
 
       fetch(pendingDataUrl)
         .then((res) => res.blob())
@@ -125,10 +139,9 @@ export function EditorLayout() {
           const file = new File([blob], pendingName, {
             type: pendingType || "image/jpeg",
           });
-          handleFileSelect(file);
+          handleFileSelectRef.current(file);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto-load sample image from ?sample=xxx query parameter

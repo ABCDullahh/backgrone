@@ -7,6 +7,7 @@ import { OnnxEngine } from "./engines/onnx-engine";
 export class ModelRegistry {
   private engines: Map<EngineId, MLEngine> = new Map();
   private _activeEngine: EngineId;
+  private loadingPromise: Map<EngineId, Promise<void>> = new Map();
 
   constructor() {
     this.engines.set("precision", new ImglyEngine());
@@ -32,21 +33,39 @@ export class ModelRegistry {
     const current = this.engines.get(this._activeEngine);
     if (current && current.status !== "idle") {
       current.dispose();
+      this.loadingPromise.delete(this._activeEngine);
     }
     this._activeEngine = id;
-    const engine = this.getEngine(id);
-    if (engine.status === "idle" || engine.status === "error") {
-      await engine.load(onProgress);
-    }
+    await this.ensureLoaded(onProgress);
   }
 
   async ensureLoaded(
     onProgress: (progress: number) => void
   ): Promise<MLEngine> {
-    const engine = this.getEngine(this._activeEngine);
-    if (engine.status === "idle" || engine.status === "error") {
-      await engine.load(onProgress);
+    const id = this._activeEngine;
+    const engine = this.getEngine(id);
+
+    // Already ready — return immediately
+    if (engine.status === "ready") return engine;
+
+    // Currently loading — wait for the existing load to finish
+    const existing = this.loadingPromise.get(id);
+    if (existing) {
+      await existing;
+      return engine;
     }
+
+    // Idle or error — start loading
+    if (engine.status === "idle" || engine.status === "error") {
+      const promise = engine.load(onProgress);
+      this.loadingPromise.set(id, promise);
+      try {
+        await promise;
+      } finally {
+        this.loadingPromise.delete(id);
+      }
+    }
+
     return engine;
   }
 

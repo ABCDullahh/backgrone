@@ -1,0 +1,10 @@
+services:
+  backgrone:
+    build: .
+    container_name: backgrone
+    restart: unless-stopped
+    ports:
+      - "3339:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1

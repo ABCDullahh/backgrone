@@ -29,13 +29,17 @@ async function blobToImage(blob: Blob): Promise<HTMLImageElement> {
 
 function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    canvas.toBlob(
-      (blob) => {
-        if (blob) resolve(blob);
-        else reject(new Error("Failed to create blob"));
-      },
-      "image/png"
-    );
+    try {
+      canvas.toBlob(
+        (blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("Failed to create blob"));
+        },
+        "image/png"
+      );
+    } catch (err) {
+      reject(err instanceof Error ? err : new Error("Canvas export failed"));
+    }
   });
 }
 

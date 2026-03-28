@@ -3,6 +3,15 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Upload } from "lucide-react";
+import { setPendingFile } from "@/lib/pending-file";
+
+const VALID_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/heic",
+  "image/heif",
+];
 
 export function GlobalDropZone() {
   const router = useRouter();
@@ -12,6 +21,15 @@ export function GlobalDropZone() {
 
   const isEditorPage = pathname === "/editor";
 
+  const handleFile = useCallback(
+    (file: File) => {
+      if (!VALID_TYPES.includes(file.type)) return;
+      setPendingFile(file);
+      router.push("/editor");
+    },
+    [router]
+  );
+
   useEffect(() => {
     if (isEditorPage) return;
 
@@ -19,16 +37,12 @@ export function GlobalDropZone() {
       e.preventDefault();
       if (!e.dataTransfer?.types.includes("Files")) return;
       dragCounter.current++;
-      if (dragCounter.current === 1) {
-        setIsDragging(true);
-      }
+      if (dragCounter.current === 1) setIsDragging(true);
     };
 
     const onDragOver = (e: DragEvent) => {
       e.preventDefault();
-      if (e.dataTransfer) {
-        e.dataTransfer.dropEffect = "copy";
-      }
+      if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
     };
 
     const onDragLeave = (e: DragEvent) => {
@@ -47,28 +61,7 @@ export function GlobalDropZone() {
       setIsDragging(false);
 
       const file = e.dataTransfer?.files[0];
-      if (!file) return;
-
-      const validTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/heic",
-        "image/heif",
-      ];
-      if (!validTypes.includes(file.type)) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        sessionStorage.setItem(
-          "backgrone-pending-file",
-          reader.result as string
-        );
-        sessionStorage.setItem("backgrone-pending-filename", file.name);
-        sessionStorage.setItem("backgrone-pending-type", file.type);
-        router.push("/editor");
-      };
-      reader.readAsDataURL(file);
+      if (file) handleFile(file);
     };
 
     document.addEventListener("dragenter", onDragEnter);
@@ -81,7 +74,7 @@ export function GlobalDropZone() {
       document.removeEventListener("dragleave", onDragLeave);
       document.removeEventListener("drop", onDrop);
     };
-  }, [isEditorPage, router]);
+  }, [isEditorPage, handleFile]);
 
   if (!isDragging || isEditorPage) return null;
 
@@ -99,28 +92,7 @@ export function GlobalDropZone() {
         setIsDragging(false);
 
         const file = e.dataTransfer?.files[0];
-        if (!file) return;
-
-        const validTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp",
-          "image/heic",
-          "image/heif",
-        ];
-        if (!validTypes.includes(file.type)) return;
-
-        const reader = new FileReader();
-        reader.onload = () => {
-          sessionStorage.setItem(
-            "backgrone-pending-file",
-            reader.result as string
-          );
-          sessionStorage.setItem("backgrone-pending-filename", file.name);
-          sessionStorage.setItem("backgrone-pending-type", file.type);
-          router.push("/editor");
-        };
-        reader.readAsDataURL(file);
+        if (file) handleFile(file);
       }}
     >
       <div className="flex flex-col items-center gap-6 pointer-events-none">
