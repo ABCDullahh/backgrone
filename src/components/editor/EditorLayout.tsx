@@ -22,6 +22,7 @@ import {
 } from "@/lib/utils/canvas-compositing";
 import type { GradientConfig } from "@/lib/utils/canvas-compositing";
 import { ACCEPTED_FORMATS } from "@/lib/ml/types";
+import { Upload } from "lucide-react";
 import { UploadZone } from "./UploadZone";
 import { ProcessingOverlay } from "./ProcessingOverlay";
 import { ResultView } from "./ResultView";
@@ -336,8 +337,75 @@ export function EditorLayout() {
     [handleFileSelect, handleFilesSelect]
   );
 
+  // Global drag-drop for editor — handles drops in any state (result, processing, etc.)
+  const [isEditorDrag, setIsEditorDrag] = useState(false);
+  const editorDragCounter = useRef(0);
+
+  const handleEditorDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    if (!e.dataTransfer.types.includes("Files")) return;
+    editorDragCounter.current++;
+    if (editorDragCounter.current === 1) setIsEditorDrag(true);
+  }, []);
+
+  const handleEditorDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+  }, []);
+
+  const handleEditorDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    editorDragCounter.current--;
+    if (editorDragCounter.current <= 0) {
+      editorDragCounter.current = 0;
+      setIsEditorDrag(false);
+    }
+  }, []);
+
+  const handleEditorDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      editorDragCounter.current = 0;
+      setIsEditorDrag(false);
+
+      const files = e.dataTransfer.files;
+      if (!files.length) return;
+
+      const validFiles = Array.from(files).filter((f) =>
+        ACCEPTED_FORMATS.includes(f.type as (typeof ACCEPTED_FORMATS)[number])
+      );
+      if (validFiles.length === 0) return;
+
+      if (validFiles.length > 1) {
+        handleFilesSelect(validFiles);
+      } else {
+        handleFileSelect(validFiles[0]);
+      }
+    },
+    [handleFileSelect, handleFilesSelect]
+  );
+
   return (
-    <div className="flex h-[calc(100vh-5rem)] mt-20">
+    <div
+      className="flex h-[calc(100vh-5rem)] mt-20 relative"
+      onDragEnter={handleEditorDragEnter}
+      onDragOver={handleEditorDragOver}
+      onDragLeave={handleEditorDragLeave}
+      onDrop={handleEditorDrop}
+    >
+      {/* Drop overlay */}
+      {isEditorDrag && editorState !== "empty" && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-primary/80 backdrop-blur-sm pointer-events-none">
+          <div className="flex flex-col items-center gap-4">
+            <Upload className="h-12 w-12 text-white" />
+            <p className="font-headline text-2xl font-black text-white">
+              Drop to Process
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Canvas Area */}
       <div className="flex-1 bg-surface-container-low overflow-hidden">
         {editorState === "empty" && (
