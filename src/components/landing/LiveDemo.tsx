@@ -8,6 +8,7 @@ import {
   ReactCompareSliderImage,
 } from "react-compare-slider";
 import { Upload, ShoppingBag, User, Bird, Car } from "lucide-react";
+import { setPendingFile } from "@/lib/pending-file";
 import { ANIM, fadeInUp } from "@/lib/animations";
 
 const SAMPLE_ITEMS = [
@@ -45,14 +46,8 @@ export function LiveDemo() {
 
   const storeFileAndNavigate = useCallback(
     (file: File) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        sessionStorage.setItem("backgrone-pending-file", reader.result as string);
-        sessionStorage.setItem("backgrone-pending-filename", file.name);
-        sessionStorage.setItem("backgrone-pending-type", file.type);
-        router.push("/editor");
-      };
-      reader.readAsDataURL(file);
+      setPendingFile(file);
+      router.push("/editor");
     },
     [router]
   );

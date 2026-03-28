@@ -16,6 +16,15 @@ function getWorker(): Worker {
       const handler = messageHandlers.get(event.data.id);
       if (handler) handler(event.data);
     };
+    workerInstance.onerror = (event) => {
+      const errMsg = event.message ?? "Worker crashed unexpectedly";
+      for (const handler of messageHandlers.values()) {
+        handler({ id: "", type: "error", error: errMsg });
+      }
+      messageHandlers.clear();
+      workerInstance = null;
+      listenerCount = 0;
+    };
   }
   listenerCount++;
   return workerInstance;

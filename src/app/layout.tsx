@@ -143,12 +143,6 @@ export default function RootLayout({
                   "@type": "WebSite",
                   name: "Backgrone",
                   url: "https://backgrone.app",
-                  potentialAction: {
-                    "@type": "SearchAction",
-                    target: "https://backgrone.app/editor",
-                    "query-input":
-                      "required name=search_term_string",
-                  },
                 },
               ],
             }),

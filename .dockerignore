@@ -1,0 +1,9 @@
+.git
+.gitignore
+*.md
+.env*
+.DS_Store
+.playwright-mcp
+.next/cache
+.next/dev
+.next/node_modules

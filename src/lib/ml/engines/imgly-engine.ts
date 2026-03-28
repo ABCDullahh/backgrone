@@ -1,5 +1,8 @@
+import { removeBackground } from "@imgly/background-removal";
 import type { MLEngine } from "../types";
 import type { EngineStatus } from "@/types";
+
+const IMGLY_CDN = "https://staticimgly.com/@imgly/background-removal-data/1.7.0/dist/";
 
 export class ImglyEngine implements MLEngine {
   id = "precision" as const;
@@ -8,15 +11,9 @@ export class ImglyEngine implements MLEngine {
   modelSize = "~84MB";
   status: EngineStatus = "idle";
 
-  private removeBackground:
-    | ((blob: Blob, config?: any) => Promise<Blob>)
-    | null = null;
-
   async load(onProgress: (progress: number) => void): Promise<void> {
     this.status = "loading";
     try {
-      const mod = await import("@imgly/background-removal");
-      this.removeBackground = mod.removeBackground;
       onProgress(20);
 
       // Force model download by processing a tiny image
@@ -25,9 +22,11 @@ export class ImglyEngine implements MLEngine {
       ctx.fillStyle = "#ff0000";
       ctx.fillRect(0, 0, 1, 1);
       const tinyBlob = await tiny.convertToBlob({ type: "image/png" });
-      await this.removeBackground(tinyBlob, {
+      await removeBackground(tinyBlob, {
+        publicPath: IMGLY_CDN,
         model: "isnet_fp16",
-        output: { format: "image/png", type: "foreground" },
+        output: { format: "image/png" },
+
         progress: (key: string, current: number, total: number) => {
           if (total > 0) onProgress(20 + Math.round((current / total) * 80));
         },
@@ -42,7 +41,7 @@ export class ImglyEngine implements MLEngine {
   }
 
   async process(imageData: ImageData): Promise<ImageData> {
-    if (!this.removeBackground || this.status !== "ready") {
+    if (this.status !== "ready") {
       throw new Error("Engine not loaded");
     }
     this.status = "processing";
@@ -52,9 +51,10 @@ export class ImglyEngine implements MLEngine {
       ctx.putImageData(imageData, 0, 0);
       const blob = await canvas.convertToBlob({ type: "image/png" });
 
-      const resultBlob = await this.removeBackground(blob, {
+      const resultBlob = await removeBackground(blob, {
+        publicPath: IMGLY_CDN,
         model: "isnet_fp16",
-        output: { format: "image/png", type: "foreground" },
+        output: { format: "image/png" },
       });
 
       const resultBitmap = await createImageBitmap(resultBlob);
@@ -78,7 +78,6 @@ export class ImglyEngine implements MLEngine {
   }
 
   dispose(): void {
-    this.removeBackground = null;
     this.status = "idle";
   }
 }

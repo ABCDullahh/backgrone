@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useMLWorker } from "./use-ml-worker";
 import type { ProcessingProgress, ProcessingResult } from "@/types";
 import { ACCEPTED_FORMATS, MAX_FILE_SIZE } from "@/lib/ml/types";
@@ -115,7 +115,6 @@ export function useBackgroundRemoval() {
 
   const cancel = useCallback(() => {
     if (currentMessageId.current) {
-      // Notify the worker so it can acknowledge the cancellation
       send({ type: "cancel" }, () => {});
       cleanup(currentMessageId.current);
       currentMessageId.current = null;
@@ -123,6 +122,16 @@ export function useBackgroundRemoval() {
     setIsProcessing(false);
     setProgress(null);
   }, [send, cleanup]);
+
+  // Cleanup on unmount — resolve pending promise and free resources
+  useEffect(() => {
+    return () => {
+      if (currentMessageId.current) {
+        cleanup(currentMessageId.current);
+        currentMessageId.current = null;
+      }
+    };
+  }, [cleanup]);
 
   return {
     processImage,

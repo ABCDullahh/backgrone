@@ -1,5 +1,8 @@
+import { pipeline, env, RawImage } from "@huggingface/transformers";
 import type { MLEngine } from "../types";
 import type { EngineStatus } from "@/types";
+
+env.allowLocalModels = false;
 
 export class TransformersEngine implements MLEngine {
   id = "balanced" as const;
@@ -13,9 +16,6 @@ export class TransformersEngine implements MLEngine {
   async load(onProgress: (progress: number) => void): Promise<void> {
     this.status = "loading";
     try {
-      const { pipeline, env } = await import("@huggingface/transformers");
-      env.allowLocalModels = false;
-
       this.segmenter = await pipeline(
         "image-segmentation",
         "briaai/RMBG-1.4",
@@ -39,7 +39,6 @@ export class TransformersEngine implements MLEngine {
     }
     this.status = "processing";
     try {
-      const { RawImage } = await import("@huggingface/transformers");
       const rawImage = new RawImage(
         new Uint8ClampedArray(imageData.data),
         imageData.width,
