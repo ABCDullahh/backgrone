@@ -179,11 +179,48 @@ src/
 
 ## How It Works
 
+```mermaid
+flowchart LR
+    A["Upload Image\n(Drag, Click, Paste)"] --> B["Web Worker\nThread"]
+    B --> C{"Engine Selection"}
+    C --> D["ISNet Precision\n(fp16, ~84MB)"]
+    C --> E["ISNet Lightweight\n(uint8, ~42MB)"]
+    C --> F["RMBG-1.4\n(~44MB)"]
+    D --> G["ONNX Runtime\n(WASM / WebGPU)"]
+    E --> G
+    F --> G
+    G --> H["Alpha Mask\nGeneration"]
+    H --> I{"Background Option"}
+    I --> J["Transparent PNG"]
+    I --> K["Solid Color"]
+    I --> L["Gradient"]
+    I --> M["Custom Image"]
+    J --> N["Download Result"]
+    K --> N
+    L --> N
+    M --> N
+
+    style A fill:#006e16,color:#fff
+    style G fill:#111,color:#0f0
+    style N fill:#006e16,color:#fff
 ```
-┌──────────┐    ┌───────────┐    ┌──────────────┐    ┌──────────┐
-│  Upload   │───>│ Web Worker │───>│ ONNX Runtime │───>│ Download │
-│ (Browser) │    │  Thread    │    │ (WASM/WebGPU)│    │   PNG    │
-└──────────┘    └───────────┘    └──────────────┘    └──────────┘
+
+```mermaid
+flowchart TB
+    subgraph Browser ["100% Client-Side (No Server)"]
+        direction TB
+        UI["React UI\n(Main Thread)"] <-->|"postMessage"| WW["Web Worker\n(Background Thread)"]
+        WW <--> ONNX["ONNX Runtime Web"]
+        ONNX <--> WASM["WebAssembly Backend"]
+        ONNX <--> GPU["WebGPU Backend\n(if available)"]
+        WW <-->|"Cache Models"| IDB["IndexedDB\n(Persistent Cache)"]
+    end
+
+    CDN["HuggingFace CDN\n(First Load Only)"] -->|"Download Model\n(one-time)"| IDB
+
+    style Browser fill:#1a1a1a,color:#fff
+    style UI fill:#006e16,color:#fff
+    style CDN fill:#333,color:#fff
 ```
 
 1. **Upload** — Drag-drop, click, or paste an image (JPEG, PNG, WebP, HEIC)
