@@ -113,7 +113,7 @@ export function UploadZone({ onFileSelect, onFilesSelect }: UploadZoneProps) {
         <Upload className="h-12 w-12 text-outline" />
         <div className="text-center">
           <p className="font-headline text-xl text-on-surface">
-            Drop image here or click to upload
+            Click here to upload
           </p>
           <p className="mt-2 font-label text-[10px] uppercase tracking-widest text-outline">
             PNG, JPG, WEBP, HEIC — Max 20MB

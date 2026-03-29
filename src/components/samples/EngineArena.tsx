@@ -12,7 +12,6 @@ import { ArenaResult } from "./ArenaResult";
 
 export function EngineArena() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isDragOver, setIsDragOver] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const { results, isRunning, runArena, reset } = useEngineArena();
 
@@ -40,15 +39,6 @@ export function EngineArena() {
     [runArena, previewUrl]
   );
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      setIsDragOver(false);
-      const file = e.dataTransfer.files[0];
-      if (file) handleFile(file);
-    },
-    [handleFile]
-  );
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,25 +128,12 @@ export function EngineArena() {
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            onDrop={handleDrop}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragOver(true);
-            }}
-            onDragLeave={(e) => {
-              e.preventDefault();
-              setIsDragOver(false);
-            }}
-            className={`flex w-full max-w-2xl flex-col items-center justify-center gap-6 border-2 border-dashed p-16 transition-colors ${
-              isDragOver
-                ? "border-primary bg-surface-container"
-                : "border-outline-variant hover:border-outline"
-            }`}
+            className="flex w-full max-w-2xl flex-col items-center justify-center gap-6 border-2 border-dashed p-16 transition-colors border-outline-variant hover:border-outline"
           >
             <Upload className="h-12 w-12 text-outline" />
             <div className="text-center">
               <p className="font-headline text-xl text-on-surface">
-                Drop image here or click to upload
+                Click here to upload
               </p>
               <p className="mt-2 font-label text-[10px] uppercase tracking-widest text-outline">
                 One image, three engines, side by side
