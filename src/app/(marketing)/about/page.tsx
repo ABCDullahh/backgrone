@@ -115,10 +115,10 @@ export default function AboutPage() {
             Questions, ideas, collaborations, or just want to say hello.
           </p>
           <a
-            href="mailto:hello@backgrone.app"
+            href="mailto:faizal2jz@gmail.com"
             className="mt-4 inline-block font-headline text-2xl font-bold underline decoration-secondary-container decoration-2 underline-offset-4 hover:decoration-secondary"
           >
-            hello@backgrone.app
+            faizal2jz@gmail.com
           </a>
         </div>
       </section>
