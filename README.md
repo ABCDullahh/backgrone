@@ -121,44 +121,6 @@ npm run lint
 
 ---
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── (app)/              # Client-rendered pages
-│   │   ├── editor/         # Main background removal tool
-│   │   └── samples/        # Sample showcase + Engine Arena
-│   ├── (marketing)/        # Static/SSG pages
-│   │   ├── about/          # Brand philosophy
-│   │   ├── blog/[slug]/    # MDX blog articles
-│   │   ├── how-it-works/   # Technical deep dive
-│   │   ├── pricing/        # Pricing page
-│   │   ├── privacy/        # Privacy policy
-│   │   ├── terms/          # Terms of service
-│   │   └── video/          # Video BG removal (coming soon)
-│   ├── layout.tsx          # Root layout + metadata
-│   ├── robots.ts           # Dynamic robots.txt
-│   └── sitemap.ts          # Dynamic sitemap.xml
-├── components/
-│   ├── editor/             # EditorLayout, UploadZone, ResultView, BatchQueue
-│   ├── landing/            # Hero, LiveDemo, Features, FAQ sections
-│   ├── layout/             # NavBar, Footer, GlobalDropZone
-│   ├── samples/            # SampleShowcase, EngineArena
-│   └── ui/                 # Shared UI primitives
-├── content/blog/           # MDX blog posts
-├── lib/
-│   ├── ml/                 # ML processing layer
-│   │   └── engines/        # 3 engine implementations
-│   ├── hooks/              # React hooks (useBackgroundRemoval, useModelManager, etc.)
-│   ├── utils/              # Canvas compositing, download helpers
-│   └── data/               # Static data (samples)
-├── workers/                # Web Worker for ML inference
-└── types/                  # TypeScript type definitions
-```
-
----
-
 ## Pages
 
 | Route | Description |
@@ -235,54 +197,45 @@ The AI model (~42-84MB depending on engine) downloads once and is cached in Inde
 
 Backgrone is designed to be self-hosted. It requires no backend, database, or API keys.
 
-### Docker
+### Deploy with PM2
 
-```dockerfile
-FROM node:18-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
-
-FROM node:18-alpine AS runner
-WORKDIR /app
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-EXPOSE 3000
-CMD ["node", "server.js"]
+```bash
+git clone https://github.com/ABCDullahh/backgrone.git
+cd backgrone
+npm ci && npm run build
+pm2 start "npx next start --port 3000" --name backgrone
 ```
 
 ### Required Headers
 
-Backgrone uses `SharedArrayBuffer` for WASM multi-threading. Your server must return these headers:
+Backgrone uses `SharedArrayBuffer` for WASM multi-threading. These headers are configured automatically in `next.config.ts`:
 
 ```
 Cross-Origin-Embedder-Policy: credentialless
 Cross-Origin-Opener-Policy: same-origin
 ```
 
-These are already configured in `next.config.ts`.
-
 ### Nginx Reverse Proxy
 
 ```nginx
 server {
-    listen 443 ssl http2;
+    listen 80;
     server_name backgrone.yourdomain.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-
-        # Required for SharedArrayBuffer
-        add_header Cross-Origin-Embedder-Policy "credentialless" always;
-        add_header Cross-Origin-Opener-Policy "same-origin" always;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
     }
 }
 ```
+
+Add SSL with `certbot --nginx -d backgrone.yourdomain.com`.
 
 ---
 
