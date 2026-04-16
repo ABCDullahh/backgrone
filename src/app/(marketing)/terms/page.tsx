@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Terms of service for Backgrone, the free AI background remover. Client-side image processing, no data collection, open-source background removal tool.",
   alternates: {
-    canonical: "https://backgrone.app/terms",
+    canonical: "https://backgrone.abcdullahh.com/terms",
   },
 };
 

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "See real background removal results from Backgrone's AI engines. Compare before and after images for portraits, products, animals, and more. Free AI background remover samples.",
   alternates: {
-    canonical: "https://backgrone.app/samples",
+    canonical: "https://backgrone.abcdullahh.com/samples",
   },
 };
 

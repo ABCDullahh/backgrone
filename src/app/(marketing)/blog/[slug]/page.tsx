@@ -22,7 +22,7 @@ export async function generateMetadata({
     title: post.title,
     description: post.excerpt,
     alternates: {
-      canonical: `https://backgrone.app/blog/${slug}`,
+      canonical: `https://backgrone.abcdullahh.com/blog/${slug}`,
     },
   };
 }

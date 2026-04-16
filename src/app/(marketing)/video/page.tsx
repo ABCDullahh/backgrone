@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     "Video background removal is coming to Backgrone. Remove backgrounds from video in real-time, right in your browser. Webcam support, MP4/WEBM export, 100% local processing.",
   alternates: {
-    canonical: "https://backgrone.app/video",
+    canonical: "https://backgrone.abcdullahh.com/video",
   },
 };
 

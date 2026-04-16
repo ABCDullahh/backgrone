@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Articles on AI background removal, WebAssembly-powered image processing, privacy-first design, and tips for removing backgrounds from images. Backgrone journal.",
   alternates: {
-    canonical: "https://backgrone.app/blog",
+    canonical: "https://backgrone.abcdullahh.com/blog",
   },
 };
 

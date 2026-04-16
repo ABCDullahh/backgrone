@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Backgrone privacy policy. Your images never leave your device. 100% local AI background removal with zero data collection, no tracking, no cloud processing.",
   alternates: {
-    canonical: "https://backgrone.app/privacy",
+    canonical: "https://backgrone.abcdullahh.com/privacy",
   },
 };
 

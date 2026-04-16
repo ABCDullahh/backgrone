@@ -23,7 +23,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://backgrone.app"),
+  metadataBase: new URL("https://backgrone.abcdullahh.com"),
   title: {
     default:
       "Backgrone \u2014 Free AI Background Remover | Remove Background Instantly",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Backgrone",
     locale: "en_US",
-    url: "https://backgrone.app",
+    url: "https://backgrone.abcdullahh.com",
   },
   twitter: {
     card: "summary_large_image",
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
       "Remove background from images for free with AI. 100% private, no upload, runs locally in your browser.",
   },
   alternates: {
-    canonical: "https://backgrone.app",
+    canonical: "https://backgrone.abcdullahh.com",
   },
   icons: {
     icon: [
@@ -111,7 +111,7 @@ export default function RootLayout({
                   ],
                   description:
                     "Free AI background remover that runs 100% in your browser. Remove backgrounds from images instantly with no upload, no signup, and no watermarks. Powered by ISNet and RMBG AI models via WebAssembly.",
-                  url: "https://backgrone.app",
+                  url: "https://backgrone.abcdullahh.com",
                   applicationCategory: "DesignApplication",
                   operatingSystem: "Web Browser",
                   offers: {
@@ -131,7 +131,7 @@ export default function RootLayout({
                     "Works offline after first load",
                   ],
                   screenshot:
-                    "https://backgrone.app/samples/hero-before.jpg",
+                    "https://backgrone.abcdullahh.com/samples/hero-before.jpg",
                   softwareVersion: "1.0.0",
                   author: {
                     "@type": "Person",
@@ -141,7 +141,7 @@ export default function RootLayout({
                 {
                   "@type": "WebSite",
                   name: "Backgrone",
-                  url: "https://backgrone.app",
+                  url: "https://backgrone.abcdullahh.com",
                 },
               ],
             }),

@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Learn about Backgrone, the free AI background remover that processes images 100% locally in your browser. No uploads, no cloud, no tracking. Private background removal by architecture.",
   alternates: {
-    canonical: "https://backgrone.app/about",
+    canonical: "https://backgrone.abcdullahh.com/about",
   },
 };
 

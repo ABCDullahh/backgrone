@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description:
     "Remove background from images online for free using AI. No upload to servers, no signup, no watermark. Private client-side background removal powered by WebAssembly. Supports PNG, JPG, WebP, HEIC.",
   alternates: {
-    canonical: "https://backgrone.app",
+    canonical: "https://backgrone.abcdullahh.com",
   },
 };
 

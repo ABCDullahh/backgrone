@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Upload your image and remove the background instantly. 100% free, no signup, runs locally in your browser. Supports PNG, JPG, WebP, HEIC. AI-powered background remover.",
   alternates: {
-    canonical: "https://backgrone.app/editor",
+    canonical: "https://backgrone.abcdullahh.com/editor",
   },
 };
 

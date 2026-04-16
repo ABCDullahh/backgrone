@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Learn how Backgrone removes backgrounds from images using AI locally in your browser. WebAssembly-powered, no upload to servers, 3 AI engines, instant transparent PNG output.",
   alternates: {
-    canonical: "https://backgrone.app/how-it-works",
+    canonical: "https://backgrone.abcdullahh.com/how-it-works",
   },
 };
 
